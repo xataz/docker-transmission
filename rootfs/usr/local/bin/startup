@@ -1,0 +1,33 @@
+#!/bin/sh
+
+deluser transmission
+addgroup -g ${GID} transmission && adduser -h /home/transmission -D -G transmission -s /bin/sh -u ${UID} transmission
+
+if [ ! -f /home/transmission/.config/transmission-daemon/settings.json ]
+then
+    mkdir -p /home/transmission/.config/transmission-daemon/
+    mv /tmp/settings.json /home/transmission/.config/transmission-daemon/settings.json
+    sed -i "s|<webroot>|"${WEBROOT}"|" /home/transmission/.config/transmission-daemon/settings.json
+fi
+
+mkdir -p /data/torrents /data/Media /data/watch
+chown -R transmission:transmission /data /home/transmission /usr/share/transmission
+
+if [ -e /filebot ]; then
+    sed -i -e 's|"script-torrent-done-enabled": false,|"script-torrent-done-enabled": true,|' \
+        -e 's|"script-torrent-done-filename": "",|"script-torrent-done-filename": "",|' /tmp/settings.json 
+
+    sed -e 's#<FILEBOT_RENAME_MOVIES>#'"$FILEBOT_RENAME_MOVIES"'#' \
+        -e 's#<FILEBOT_RENAME_METHOD>#'"$FILEBOT_RENAME_METHOD"'#' \
+        -e 's#<FILEBOT_RENAME_MUSICS>#'"$FILEBOT_RENAME_MUSICS"'#' \
+        -e 's#<FILEBOT_RENAME_SERIES>#'"$FILEBOT_RENAME_SERIES"'#' \
+        -e 's#<FILEBOT_RENAME_ANIMES>#'"$FILEBOT_RENAME_ANIMES"'#' -i /usr/local/bin/postdl
+
+    chmod +x /usr/local/bin/post* 
+fi
+
+if [ '$@' == '' ]; then
+    exec su-exec transmission:transmission /sbin/tini -- transmission-daemon --foreground
+else
+    exec su-exec transmission:transmission /sbin/tini -- "$@"
+fi
