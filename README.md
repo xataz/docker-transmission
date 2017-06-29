@@ -1,10 +1,14 @@
 ![Transmission](http://blogmmix.ch/sites/default/files/imagecache/gross/6/transmission-bittorrent1.png)
 
-## Tag available
-* latest [(Dockerfile)](https://github.com/xataz/dockerfiles/tree/master/transmission/Dockerfile)
+[![Build Status](https://drone.xataz.net/api/badges/xataz/docker-transmission/status.svg)](https://drone.xataz.net/xataz/docker-transmission)
+[![](https://images.microbadger.com/badges/image/xataz/transmission.svg)](https://microbadger.com/images/xataz/transmission "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/xataz/transmission.svg)](https://microbadger.com/images/xataz/transmission "Get your own version badge on microbadger.com")
 
 > This image is build and push with [drone.io](https://github.com/drone/drone), a circle-ci like self-hosted.
 > If you don't trust, you can build yourself.
+
+## Tag available
+* latest [(Dockerfile)](https://github.com/xataz/dockerfiles/tree/master/transmission/Dockerfile)
 
 ## Description
 What is [Transmission](http://www.transmissionbt.com/) ?
