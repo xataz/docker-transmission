@@ -30,7 +30,7 @@ ENV FILEBOT_RENAME_METHOD="symlink" \
     FILEBOT_RENAME_MUSICS="{n}/{fn}"
 
 RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
-        apk add --no-cache openjdk8-jre java-jna-native binutils wget \
+        apk add --no-cache openjdk8-jre java-jna-native binutils wget build-base automake autoconf \
         && cd /tmp \
         && wget http://mediaarea.net/download/binary/mediainfo/${MEDIAINFO_VER}/MediaInfo_CLI_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
         && wget http://mediaarea.net/download/binary/libmediainfo0/${MEDIAINFO_VER}/MediaInfo_DLL_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
@@ -64,7 +64,7 @@ RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
         && strip -s /usr/local/bin/fpcalc \
         && ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/x86_64/libzen.so \
         && ln -sf /usr/local/lib/libmediainfo.so.0.0.0 /filebot/lib/x86_64/libmediainfo.so \
-        && apk del --no-cache wget binutils \
+        && apk del --no-cache wget binutils build-base automake autoconf \
         && rm -rf /filebot/FileBot_${FILEBOT_VER}-portable.tar.xz \
     ;fi
 
