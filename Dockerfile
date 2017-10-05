@@ -30,7 +30,7 @@ ENV FILEBOT_RENAME_METHOD="symlink" \
     FILEBOT_RENAME_MUSICS="{n}/{fn}"
 
 RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
-        apk add --no-cache openjdk8-jre java-jna-native binutils wget build-base automake autoconf libtool \
+        apk add --no-cache openjdk8-jre java-jna-native binutils wget build-base automake autoconf libtool git \
         && cd /tmp \
         && wget http://mediaarea.net/download/binary/mediainfo/${MEDIAINFO_VER}/MediaInfo_CLI_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
         && wget http://mediaarea.net/download/binary/libmediainfo0/${MEDIAINFO_VER}/MediaInfo_DLL_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
@@ -59,7 +59,7 @@ RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
         && cd /filebot \
         && wget http://downloads.sourceforge.net/project/filebot/filebot/FileBot_${FILEBOT_VER}/FileBot_${FILEBOT_VER}-portable.tar.xz -O /filebot/filebot.tar.xz \
         && tar xJf filebot.tar.xz \
-        && apk del ca-certificates libressl \
+        && apk del ca-certificates libressl git \
         && mv chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64/fpcalc /usr/local/bin \
         && strip -s /usr/local/bin/fpcalc \
         && ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/x86_64/libzen.so \
