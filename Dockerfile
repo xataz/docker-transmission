@@ -3,7 +3,7 @@ FROM xataz/alpine:3.6
 LABEL description="transmission based on alpine" \
       tags="latest" \
       maintainer="xataz <https://github.com/xataz>" \
-      build_ver="2017100501"
+      build_ver="2017100502"
 
 ENV UID=991 \
     GID=991 \
@@ -20,8 +20,9 @@ RUN BUILD_DEPS="git" \
 
 ARG WITH_FILEBOT=NO
 ARG FILEBOT_VER=4.7.9
-ARG MEDIAINFO_VER=0.7.95
-ARG LIBZEN_VER=0.4.31
+ARG MEDIAINFO_VER=0.7.99
+ARG LIBZEN_VER=0.4.37
+ARG CHROMAPRINT_VER=1.4.2
 
 ENV FILEBOT_RENAME_METHOD="symlink" \
     FILEBOT_RENAME_MOVIES="{n} ({y})" \
@@ -35,6 +36,10 @@ RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
         && wget http://mediaarea.net/download/binary/mediainfo/${MEDIAINFO_VER}/MediaInfo_CLI_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
         && wget http://mediaarea.net/download/binary/libmediainfo0/${MEDIAINFO_VER}/MediaInfo_DLL_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
         && wget http://downloads.sourceforge.net/zenlib/libzen_${LIBZEN_VER}.tar.gz \
+        && wget https://github.com/acoustid/chromaprint/releases/download/v${CHROMAPRINT_VER}/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz \
+        && wget http://downloads.sourceforge.net/project/filebot/filebot/FileBot_${FILEBOT_VER}/FileBot_${FILEBOT_VER}-portable.tar.xz -O /filebot/filebot.tar.xz \
+        && tar xJf filebot.tar.xz \
+        && tar xzf chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz \
         && tar xzf libzen_${LIBZEN_VER}.tar.gz \
         && tar xzf MediaInfo_DLL_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
         && tar xzf MediaInfo_CLI_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
@@ -57,15 +62,13 @@ RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
         && strip -s /usr/local/bin/mediainfo \
         && mkdir /filebot \
         && cd /filebot \
-        && wget http://downloads.sourceforge.net/project/filebot/filebot/FileBot_${FILEBOT_VER}/FileBot_${FILEBOT_VER}-portable.tar.xz -O /filebot/filebot.tar.xz \
-        && tar xJf filebot.tar.xz \
-        && apk del ca-certificates libressl git \
-        && mv chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64/fpcalc /usr/local/bin \
+        && mv /tmp/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64/fpcalc /usr/local/bin \
         && strip -s /usr/local/bin/fpcalc \
         && ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/x86_64/libzen.so \
         && ln -sf /usr/local/lib/libmediainfo.so.0.0.0 /filebot/lib/x86_64/libmediainfo.so \
-        && apk del --no-cache wget binutils build-base automake autoconf libtool \
+        && apk del --no-cache wget binutils build-base automake autoconf libtool git \
         && rm -rf /filebot/FileBot_${FILEBOT_VER}-portable.tar.xz \
+        && rm -rf /tmp/* \
     ;fi
 
 VOLUME ["/data","/home/transmission/.config/transmission-daemon/"]
