@@ -37,7 +37,6 @@ RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
         && wget http://mediaarea.net/download/binary/libmediainfo0/${MEDIAINFO_VER}/MediaInfo_DLL_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
         && wget http://downloads.sourceforge.net/zenlib/libzen_${LIBZEN_VER}.tar.gz \
         && wget https://github.com/acoustid/chromaprint/releases/download/v${CHROMAPRINT_VER}/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz \
-        && wget http://downloads.sourceforge.net/project/filebot/filebot/FileBot_${FILEBOT_VER}/FileBot_${FILEBOT_VER}-portable.tar.xz -O /filebot/filebot.tar.xz \
         && tar xzf chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz \
         && tar xzf libzen_${LIBZEN_VER}.tar.gz \
         && tar xzf MediaInfo_DLL_${MEDIAINFO_VER}_GNU_FromSource.tar.gz \
@@ -60,6 +59,7 @@ RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
         && make install \
         && strip -s /usr/local/bin/mediainfo \
         && mkdir /filebot \
+        && wget http://downloads.sourceforge.net/project/filebot/filebot/FileBot_${FILEBOT_VER}/FileBot_${FILEBOT_VER}-portable.tar.xz -O /filebot/filebot.tar.xz \
         && cd /filebot \
         && tar xJf filebot.tar.xz \
         && mv /tmp/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64/fpcalc /usr/local/bin \
