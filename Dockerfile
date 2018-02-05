@@ -3,7 +3,7 @@ FROM xataz/alpine:3.7
 LABEL description="transmission based on alpine" \
       tags="latest" \
       maintainer="xataz <https://github.com/xataz>" \
-      build_ver="2017120901"
+      build_ver="2018020501"
 
 ENV UID=991 \
     GID=991 \
