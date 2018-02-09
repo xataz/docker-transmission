@@ -1,9 +1,9 @@
 FROM xataz/alpine:3.7
 
 LABEL description="transmission based on alpine" \
-      tags="latest" \
+      tags="" \
       maintainer="xataz <https://github.com/xataz>" \
-      build_ver="2018020501"
+      build_ver="201802092348"
 
 ENV UID=991 \
     GID=991 \
@@ -20,7 +20,7 @@ RUN BUILD_DEPS="git" \
 
 ARG WITH_FILEBOT=NO
 ARG FILEBOT_VER=4.7.9
-ARG CHROMAPRINT_VER=1.4.2
+ARG CHROMAPRINT_VER=1.4.3
 
 ENV FILEBOT_RENAME_METHOD="symlink" \
     FILEBOT_RENAME_MOVIES="{n} ({y})" \
