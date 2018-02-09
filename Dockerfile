@@ -29,7 +29,7 @@ ENV FILEBOT_RENAME_METHOD="symlink" \
     FILEBOT_RENAME_MUSICS="{n}/{fn}"
 
 RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
-        apk add --no-cache openjdk8-jre java-jna-native mediainfo libmediainfo wget ca-certificates \
+        apk add --no-cache openjdk8-jre java-jna-native mediainfo libmediainfo wget ca-certificates binutils \
         && wget https://github.com/acoustid/chromaprint/releases/download/v${CHROMAPRINT_VER}/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz -O /tmp/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz \
         && tar xzf /tmp/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz -C /tmp \
         && mkdir /filebot \
@@ -38,7 +38,7 @@ RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
         && tar xJf filebot.tar.xz \
         && mv /tmp/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64/fpcalc /usr/local/bin \
         && strip -s /usr/local/bin/fpcalc \
-        && apk del --no-cache wget ca-certificates \
+        && apk del --no-cache wget ca-certificates binutils \
         && rm -rf /filebot/FileBot_${FILEBOT_VER}-portable.tar.xz /tmp/* \
     ;fi
 
