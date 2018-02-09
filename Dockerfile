@@ -3,7 +3,7 @@ FROM xataz/alpine:3.7
 LABEL description="transmission based on alpine" \
       tags="" \
       maintainer="xataz <https://github.com/xataz>" \
-      build_ver="201802092348"
+      build_ver="201802092358"
 
 ENV UID=991 \
     GID=991 \
@@ -30,8 +30,8 @@ ENV FILEBOT_RENAME_METHOD="symlink" \
 
 RUN if [ "${WITH_FILEBOT}" == "YES" ]; then \
         apk add --no-cache openjdk8-jre java-jna-native mediainfo libmediainfo wget ca-certificates \
-        && wget https://github.com/acoustid/chromaprint/releases/download/v${CHROMAPRINT_VER}/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz \
-        && tar xzf chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz \
+        && wget https://github.com/acoustid/chromaprint/releases/download/v${CHROMAPRINT_VER}/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz -O /tmp/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz \
+        && tar xzf /tmp/chromaprint-fpcalc-${CHROMAPRINT_VER}-linux-x86_64.tar.gz -C /tmp \
         && mkdir /filebot \
         && wget http://downloads.sourceforge.net/project/filebot/filebot/FileBot_${FILEBOT_VER}/FileBot_${FILEBOT_VER}-portable.tar.xz -O /filebot/filebot.tar.xz \
         && cd /filebot \
