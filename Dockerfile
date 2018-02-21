@@ -3,7 +3,7 @@ FROM xataz/alpine:3.7
 LABEL description="transmission based on alpine" \
       tags="" \
       maintainer="xataz <https://github.com/xataz>" \
-      build_ver="201802200500"
+      build_ver="201802210500"
 
 ENV UID=991 \
     GID=991 \
@@ -19,7 +19,7 @@ RUN BUILD_DEPS="git" \
     && apk del --no-cache ${BUILD_DEPS}
 
 ARG WITH_FILEBOT=NO
-ARG FILEBOT_VER=4.7.19
+ARG FILEBOT_VER=4.7.15.9
 ARG CHROMAPRINT_VER=1.4.3
 
 ENV FILEBOT_RENAME_METHOD="symlink" \
