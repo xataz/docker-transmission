@@ -1,4 +1,4 @@
-FROM xataz/alpine:3.9
+FROM alpine:3.9
 
 LABEL description="transmission based on alpine" \
       tags="" \
@@ -10,7 +10,7 @@ ENV UID=991 \
     WEBROOT=""
 
 RUN BUILD_DEPS="git" \
-    && apk add --no-cache transmission-daemon \
+    && apk add --no-cache --update transmission-daemon \
                 su-exec \
                 tini \
                 ca-certificates \
