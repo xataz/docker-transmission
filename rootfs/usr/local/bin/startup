@@ -15,7 +15,7 @@ chown -R transmission:transmission /data /home/transmission /usr/share/transmiss
 
 if [ -e /filebot ]; then
     sed -i -e 's|"script-torrent-done-enabled": false,|"script-torrent-done-enabled": true,|' \
-        -e 's|"script-torrent-done-filename": "",|"script-torrent-done-filename": "",|' /tmp/settings.json 
+        -e 's|"script-torrent-done-filename": "",|"script-torrent-done-filename": "/usr/local/bin/postdl",|' /home/transmission/.config/transmission-daemon/settings.json
 
     sed -e 's#<FILEBOT_RENAME_MOVIES>#'"$FILEBOT_RENAME_MOVIES"'#' \
         -e 's#<FILEBOT_RENAME_METHOD>#'"$FILEBOT_RENAME_METHOD"'#' \
@@ -23,7 +23,7 @@ if [ -e /filebot ]; then
         -e 's#<FILEBOT_RENAME_SERIES>#'"$FILEBOT_RENAME_SERIES"'#' \
         -e 's#<FILEBOT_RENAME_ANIMES>#'"$FILEBOT_RENAME_ANIMES"'#' -i /usr/local/bin/postdl
 
-    chmod +x /usr/local/bin/post* 
+    chmod +x /usr/local/bin/post*
 fi
 
 if [ '$@' == '' ]; then
